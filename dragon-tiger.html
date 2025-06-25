@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>ड्रैगन टाइगर प्रेडिक्शन</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 90%;
+      height: 150px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 25px;
+      font-size: 16px;
+      background-color: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>ड्रैगन टाइगर प्रेडिक्शन सिस्टम</h1>
+  <p>पिछली चालें (Dragon, Tiger, Tie) नीचे डालें:</p>
+  <textarea id="historyInput" placeholder="उदाहरण: Tiger,Dragon,Dragon,Tiger..."></textarea><br>
+  <button onclick="predictNext()">अगली चाल बताओ</button>
+  <div id="result">यहाँ परिणाम दिखेगा</div>
+
+  <script>
+    function predictNext() {
+      const input = document.getElementById("historyInput").value.trim();
+      const moves = input.split(",").map(x => x.trim());
+      const lastTen = moves.slice(-10);
+      let tiger = 0, dragon = 0, tie = 0;
+
+      lastTen.forEach(m => {
+        if (m.toLowerCase() === "tiger") tiger++;
+        else if (m.toLowerCase() === "dragon") dragon++;
+        else if (m.toLowerCase() === "tie") tie++;
+      });
+
+      let prediction = "Tiger";
+      if (dragon > tiger && dragon > tie) prediction = "Dragon";
+      else if (tie > dragon && tie > tiger) prediction = "Tie";
+
+      document.getElementById("result").innerText = "🔮 अगली चाल की संभावना: " + prediction;
+    }
+  </script>
+</body>
+</html>
